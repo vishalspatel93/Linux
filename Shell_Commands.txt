@@ -1,0 +1,68 @@
+#Navigating the Filesystem
+
+Common Linux Directory Names
+	/ 		root of the virtual directory
+	/bin  	binary directory, where many GNU user-level utilities are stored
+	/boot	boot directory, where boot files are stored
+	/dev	device directory, where Linux creates device nodes
+	/etc	system configuration files directory
+	/home	home directory, where Linux creates user directories
+	/lib	library directory, where system and application library files are stored
+	/media	media directory, a common place for mount points used for removable media
+	/mnt 	mount directory, another common place for mount points used for removable media
+	/opt	optional directory, often used to store third-party software packages and data files
+	/proc	process directory, where current hardware and process information is stored
+	/root	root home directory
+	/sbin	system binary directory, where many GNU admin-level utilities are stored
+	/run	run directory, where runtime data is held during system operation
+	/srv	service directory, where local services store their files
+	/sys 	system directory, where system hardware information files are stored
+	/tmp	temporary directory, where temporary work files can be created and destroyed
+	/usr 	user binary directory, where the bulk of GNU user-level utilities and data files are stored
+	/var	variable directory, for files that change frequently, such as log files
+
+Traversing directories
+	'cd'	change directory command, takes a single parameter (destination); without any parameter, takes you to your home directory
+	'pwd'	display the shell session's current directory location (present working directory)
+	Two special characters can be used to indicate a relative directory location:
+		A single dot '.' represents the current directory
+		A double dot '..' represents the parent directory
+
+#Listing Files and Directories
+
+Displaying a basic listing
+	'ls'		list command; displays the files and directories located in your current directory
+	'ls - F'	-F parameter flags directories with a forward slash (/) and executable files with an asterick (*)
+	'ls' does not show hidden files, which start with a period (.)
+	'ls -a'		use the -a parameter to display hidden files
+	'ls -R'		use the -R parameter (recursive option) to show files that are contained within subdirectories in the current directory
+	Parameters can be combined in a single command
+
+Displaying a long listing
+	'ls -l'		-l parameter produces a long listing format; in order they are:
+	File type - Directory (d), file (-), linked file (l), character device (c), or block device (b)
+	File type permissions
+	Number of file hard links
+	The file owner username
+	The file primary group name
+	The file byte size
+	The last time the file was modified
+	The filename or directory name
+
+Filtering listing output
+	The filter on 'ls' works as a simple text-matching string; include the filter after any command line parameters you want to use, such as: 'ls -l my_script'
+	'ls' also recognizes standard wildcard characters: question mark (?) to represent one character, asterisk (*) to represent any number of characters
+	Using the asterisk and question mark in the filter is called 'file globbing' which is the process of pattern matching with wildcards
+	Wildcards are officially called 'metacharacter wildcards'
+	You can also use brackets, such as [xy] with two potential choices for a single character in that position; you can also specify of range of characters, such as [a-f]
+	You can also specify what should not be included in the pattern match by using the exclamation point, such as [!a]
+
+#Handling Files
+
+Creating files
+	'touch <file_name>' to create an empty file or to change the modification time of an existing file
+	'touch -a <file_name>' changes only the access time of an existing file
+	'ls -l --time=atime <file_name>' to view the access time of a file
+
+Copying files
+	
