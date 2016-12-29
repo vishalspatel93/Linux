@@ -65,4 +65,67 @@ Creating files
 	'ls -l --time=atime <file_name>' to view the access time of a file
 
 Copying files
-	
+	'cp <source> <destination>' to copy files and directories
+	Use the '-i' parameter to prompt if you want to overwrite a file if the destination file already exists: 'cp -i <source> <destination>'
+	Use the '-R' parameter to recursively copy the contents of an entire directory in a single command: 'cp -R <source_directory> <destination_directory>'
+
+Linking files
+	If you need to maintain multiple copies of the same file on the system, instead of having separate physical copies, you can use one physical copy and multiple virtual copies, called 'links'
+	A link is a placeholder in a directory that points to the real location of the file
+	A symbolic link is a physical file that points to another file somewhere in the virtual directory structure; two symbolically linked together files do not share the same contents
+		To create a symbolic link to a file, the original file must pre-exist then use the ln command with the -s parameter: 'ln -s <original_file> <linked_file>'
+		Another way to tell these linked files are separate physical files is to view their 'inode' number (unique identification number of a file or directory assigned by the kernel to each object in the file system); to view inode number use 'ls -i <file_name>'
+	A hard link creates a separate virtual file that contains information about the original file and where to locate it; however they are physically the same file
+		To create a hard link, the original file must pre-exist and then use the ln command with no parameter: 'ln <original_file> <linked_file>'
+		The inode number of both hard linked files will be the same because both are physically the same file
+
+Renaming files
+	Renaming files is called 'moving files' with the 'mv' command that is used to move both files and directories to another location or a new name
+	'mv <file_name> <new_name>' renames the file but keeps the same inode number and timestamp value; it only affects the file name
+	'mv <file_name> <directory>' moves the file from the current directory to the new specified directory
+	You can use the 'mv' command to rename and move the file all in the same command
+	The command can be used to rename/move entire directories and their contents as well
+
+Deleting files
+	Deleting is called 'removing' with the 'rm' command
+	'rm -i <file_name>' removes the file but the '-i' parameter promots to make sure you want to delete it
+	Wildcard metacharacters can be used to remove groups of files
+	You can use the '-f' parameter to force the removal
+
+#Managing Directories
+
+Creating directories
+	'mkdir <directory_name>' creates a new directory
+	To create several directories and subdirectories at once you can use the '-p' parameter: 'mkdir -p <New_Dir>/<New_Dir2>/<New_Dir3>'
+	The '-p' parameter makes any missing parent directories as needed
+
+Deleting directories
+	'rmdir <directory>' removes a directory, but only works for empty directories; to use the command you need to remove any files in the directory
+	'rm -ri <directory>' can be used with the '-r' parameter to go into the directory, remove the files, and then remove the directory itself
+	This also works for multiple subdirectories
+	'rm -rf <directory>' can be used to completely wipe a directory and its contents with no prompts
+
+If the tree utility is installed, you can use 'tree <directory>' to view the directory, its subdirectory, and files under the directories
+
+#Viewing File Contents
+
+Viewing the file type
+	'file <file_name>' looks inside of a file and determines what kind of file it is (also works with directories to check if it is a directory)
+
+Viewing the whole file
+	'cat <file>' displays all the data inside a text file
+	Useful paramaters:
+		'-n' numbers all the lines: 'cat -n <file>'
+		'-b' can be used to number only the lines that have text in them: 'cat -b <file>'
+		'-T' can be used to replace any tabs in the text with "^I": 'cat -T <file>'
+	'more <file>' can be used to display one page of text at a time; it displays how far along you are in %; use spacebar to move forward, Enter key to go line by line, or press the 'q' key to quit
+	'less <file>' can be used as a more advanced version of more "less is more"
+
+Viewing parts of a file
+	'tail <file>' shows the last 10 lines of the file
+	You can use the '-n' parameter to change number of lines shown using tail: 'tail -n 2 <file>' shows the last 2 lines
+	You can use the '-f' to peek inside a file being used by other processes; the tail command stays active and continues to display new lines as they apepar in the text file; this is a good way to monitor system log files in real-time
+	'head <file>' shows the first 10 lines of text
+	Head also uses the '-n' parameter to change number of lines shown
+	Both tail and head can use a dash and a number to specify number of lines, such as: 'tail -5 <file>' or 'head -5 <file>'
+
