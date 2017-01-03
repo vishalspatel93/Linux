@@ -129,3 +129,94 @@ Viewing parts of a file
 	Head also uses the '-n' parameter to change number of lines shown
 	Both tail and head can use a dash and a number to specify number of lines, such as: 'tail -5 <file>' or 'head -5 <file>'
 
+#Monitoring Programs
+
+Peeking at the processes
+	'ps' command shows processes belonging to the current user that are running in the current terminal
+	'ps -ef' command provides a lot of helpful information; the '-e' parameter shows all processes running on the system and the '-f' parameter expands the output to show a few useful columns of information:
+		UID - he user responsible for launching the process
+		PID - the process ID of the process
+		PPID - the PID of the parent process (if started by another process)
+		C - processor utilization over the lifetime of the process
+		STIME - system time when the process started
+		TTY - terminal device from which the process was launched
+		TIME - cumulative CPU time required to run the process
+		CMD - the name of the program that was started
+	You can use the '-l' parameter to produce the long format output, such as 'ps -l', which produces some extra columns:
+		F - system flags assigned to the process by the kernel
+		S - state of the process (O - running on the processor, S = sleeping, R = runnable and waiting to run, Z = zombie where the process is terminated by the parent not available, T = process stopped)
+		PRI - priority of the process (higher numbers mean lower priority)
+		NI - the nice value, which is used for determining priorities
+		ADDR - memory address of the process
+		SZ - approximate amount of swap space required if the process was swapped out
+		WCHAN - address of the kernel function where the process is sleeping
+
+Real-time process monitoring
+	'top' command displays process information similar to 'ps' but does it in real-time mode
+		PID - process ID of the process
+		USER - username of the owner of the process
+		PR - priority of the process
+		NI - nice value of the process
+		VIRT - total amount of virutal memory used by the process
+		RES - amount of physical memory the process is using
+		SHR - amount of memory the process is sharing with other processes
+		S - process stauts (D = interruptible sleep, R = running, S = sleeping, T = traced or stopped, Z = zombie)
+		%CPU - share of CPU time that the process is using
+		%MEM - share of available physical memory the process is using
+		TIME+ - total CPU time the process has used since starting
+		COMMAND - command line name of the process (program started)
+
+#Monitoring Disk Space
+
+Mounting media
+	'mount' displays a list of media devices currently mounted on the system
+		Displays device filename of the media, mount point in the virtual directory where the media is mounted, filesystem type, and access status of the mounted media
+	To mount a media device you need to be logged in or sudo as root and then use: 'mount -t <type> <device> <directory>'
+	To remove a removable media device, unmount it first: 'umount <directory or device location>'
+
+Using the df command
+	'df' shows each mounted filesystem that contains data and displays:
+		Device location of the device
+		How many 1024-byte blocks of data it can hold
+		How many 1024-byte blocks are used
+		How many 1024-byte blocks are available
+		The amount of used space as a percentage
+		The mount point where the device is mounted
+	'df -h' shows the disk space in human-readable form (usually M for megabytes or G for gigabytes)
+
+Using the du command
+	'du' shows the disk usage for a specific directory (by default, the current directory)
+	Parameters that can be used with 'du':
+		'-c' produces a grand total of all the files listed
+		'-h' prints in human-readable format (K for kilobyte, M for megabyte, and G for gigabyte)
+		'-g' summarizes each argument
+
+#Working with Data Files
+
+Sorting data
+	'sort' command sorts the data lines in a text file using standard sorting rules for the language you specify as the default for the session
+	'sort' interprets numbers as characters and performs a standard character sort, use 'sort -n <file>' to recognize numbers as numbers and sort based on value
+	Use the '-t' parameter to specify the field separator character
+	Use the '-k' parameter to specify which field to sort on
+	Use the '-r' parameter to sort the values in descending order
+
+Searching for data
+	'grep' command searches the input or the file you specify for lines that contain characters that match the specified pattern
+	'grep <options> pattern <file>' is the syntax for the command, such as 'grep sometext file1'
+	To reserve the search (output lines that don't match the pattern), use '-v': 'grep -v sometext file1'
+	To include line numbers, use the '-n' parameter
+	To see how many lines contain the matching pattern, use the '-c' parameter
+	To specify more than one matching pattern use the '-e' parameter to specify each individual pattern: 'grep -e text1 -e text2 file1'
+	By default, the 'grep' command uses basic Unix-style regular expressions to match patterns, such as: 'grep [ab] file1' to search for character a or b
+
+Compressing data
+	The gzip (.gz) package is a creation of the GNU project as a free version of the original Unox compress utility (.Z)
+	'gzip <file>' compresses the file you specify
+
+Archiving data
+	The most popular archiving tool used is the 'tar' command
+	'tar function <options> object1 object2 ...' is the syntax to use the 'tar' command
+		Function specifies what the command should do (concatenate, create, delete, etc.)
+	'tar -cvf test.tar test/ test2/' creates an archive file (test.tar) containing the contents of the test and test2 directories
+	'tar -tf test.tar' lists the contents of test.tar
+	'tar -xvf test.tar' extracts the contents of test.tar
