@@ -1,0 +1,68 @@
+The Shell
+ 
+#Parent-Child Shell Relationships
+
+The default interactive shell started is the parent shell
+A new shell program, a child shell, is created when the /bin/bash command or equivalent bash command is entered
+Use the ‘ps -f’ command to show the processes and any parent and child shells will be displayed
+Use ‘ps --forest' to show the nesting of the subshells
+Use ‘exit’ to gracefully exit out of each subshell
+ 
+#Looking at process lists
+
+Can use multiple commands one after the other by entering them all on a single line separated by a semicolon ‘;’
+For a command list to be considered a process list, the commands must be encased in parentheses
+This creates a subshell to execute the commands
+A process list a command grouping type. Another command grouping is to put commands between curly brackets and end the commands list with a semicolon, such as: { command; }
+This does not create a subshell like a process list does
+To indicate if a subshell was spawned, use the BASH_SUBSHELL environment variable: ‘echo $BASH_SUBSHELL’
+The number displayed shows the number of subshells
+You can create grandchild subshells by embedding parentheses within a process list, such as ( pwd ; (echo $BASH_SUBSHELL))
+ 
+#Background mode
+
+Use the ‘sleep’ command to make a process wait (sleep)
+‘sleep 10’ causes the session to pause for 10 seconds and then return a shell CLI prompt
+Use the ‘&’ character at the end of a command to put it into background mode, such as: ‘sleep 10&’
+A job number and process ID is displayed
+Use ‘jobs’ or ‘jobs -l' to view running jobs
+Process lists can be put into background mode by putting ‘&’ at the end of the parentheses
+ 
+#Co-processing
+
+Co-processing spawns a subshell in background mode and executes a command within that subshell
+Use the ‘coproc’ command along with the command to be executed in the subshell, such as: ‘coproc sleep 10’
+Identical to putting a command in background mode, except it creates a subshell
+By default the coproc command’s job name is ‘COPROC’ but that can be specified using the extended syntax:
+‘coproc My_Job { sleep 10; }
+ 
+#External commands
+
+An external command, also called a file system command, is a program that exists outside of the bash shell
+Typically located in /bin, /usr/bin, /sbin, or /usr/sbin
+The ‘ps’ command is an example of an external command; you can find its file name by using the which and type commands
+‘which ps’ or ‘type -a ps’
+When an external command is executed, a child process is created (termed forking)
+ 
+#Built-in commands
+
+Build-in commands do not need a child process to execute; they were compiled into the shell and are part of the shell’s toolkit
+You can tell a command is built-in by using the type command: ‘type cd’ or ‘type exit’
+Some commands have multiple flavors (both echo and pwd have built-in command flavor as well as external command flavor)
+Use the ‘-a’ parameter of ‘type’ to identify, such as ‘type -a echo’; the ‘which’ command only shows the external command file
+ 
+#History command
+
+Use the ‘history’ command to recall commands that you used in the bash shell (typically the last 1000 commands are kept in history)
+To recall and reuse the last command, use ‘!!’ (two exclamation marks)
+Command history is kept in the hidden .bash_history file (located in the user’s home directory); bash command history is kept in memory until the shell is exited and then is written to the file
+You can use ‘history -a' to force the command history be written to .bash_history before exiting the shell session
+To recall any command from the history list, use an exclamation mark and the command’s number from the history list, such as: ‘!20’; the command will first be displayed and then executed
+ 
+#Using command aliases
+
+A command alias allows you to create an alias name for common commands (and their parameters) to keep typing to a minimum
+To see a list of active aliases, use ‘alias -p'
+To create an alias, use: alias <alias_name>=’<command and parameters>’
+Example: alias li=’ls -li'
+Command aliases are built-in commands, so an alias is valid only for the shell process in which it is defined (but it can be made permanent across subshells)
